@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Save, TestTube, Eye, EyeOff, Check, X, AlertCircle, Globe } from 'lucide-react';
 import { musicAPI } from '../../services/api';
 import { useLanguage } from '../../context/LanguageContext';
+import { Language } from '../../i18n/translations';
 
 interface SettingsState {
   spotifyClientId: string;
@@ -102,7 +103,7 @@ const Settings: React.FC = () => {
     try {
       setSettings(prev => ({ ...prev, isSaving: true, saveResult: null }));
       
-      const result = await musicAPI.updateSettings({
+      await musicAPI.updateSettings({
         spotifyClientId: settings.spotifyClientId,
         spotifyClientSecret: settings.spotifyClientSecret
       });
@@ -159,7 +160,7 @@ const Settings: React.FC = () => {
             </label>
             <select
               value={language}
-              onChange={(e) => setLanguage(e.target.value as 'tr' | 'en' | 'zh')}
+              onChange={(e) => setLanguage(e.target.value as Language)}
               className="w-full px-4 py-2 bg-dark-300 text-white rounded-lg border border-dark-400 focus:ring-2 focus:ring-spotify-500 focus:border-transparent"
             >
               <option value="tr">Türkçe</option>
@@ -282,21 +283,21 @@ const Settings: React.FC = () => {
         </div>
       </div>
 
-      {/* Uygulama Bilgileri */}
+      {/* App Info */}
       <div className="bg-dark-200 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-white mb-4">Uygulama Bilgileri</h2>
+        <h2 className="text-xl font-semibold text-white mb-4">{t.settings.appInfo}</h2>
         <div className="space-y-2 text-sm">
           <p className="text-dark-600">
-            <span className="text-white font-medium">Erotify</span> - Açık kaynak müzik çalıcı
+            <span className="text-white font-medium">{t.appName}</span> - Açık kaynak müzik oynatıcı
           </p>
           <p className="text-dark-600">
-            <span className="text-white font-medium">Versiyon:</span> 1.0.0
+            <span className="text-white font-medium">{t.settings.version}:</span> 1.0.0
           </p>
           <p className="text-dark-600">
-            <span className="text-white font-medium">Teknoloji:</span> React + TypeScript + Node.js + Python
+            <span className="text-white font-medium">{t.settings.technology}:</span> React + TypeScript + Node.js + Python
           </p>
           <p className="text-dark-600">
-            <span className="text-white font-medium">Özellikler:</span> Müzik çalma, SpotDL entegrasyonu, Favoriler sistemi
+            <span className="text-white font-medium">{t.settings.features}:</span> Müzik oynatma, SpotDL entegrasyonu, Favoriler sistemi
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Music, Heart, Upload, List, Settings, Home, Search, Library, Plus, Download } from 'lucide-react';
+import { Music, Heart, Upload, Settings, Home, Library, Plus, Download } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface LayoutProps {

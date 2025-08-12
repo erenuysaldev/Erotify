@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   Play, 
   Pause, 
@@ -23,6 +24,7 @@ const formatTime = (seconds: number): string => {
 };
 
 const AudioPlayer: React.FC = () => {
+  const { t } = useLanguage();
   const { 
     state, 
     togglePlayPause, 
@@ -78,8 +80,8 @@ const AudioPlayer: React.FC = () => {
         <div className="flex items-center text-dark-600">
           <Music className="w-8 h-8 mr-3" />
           <div>
-            <p className="text-sm font-medium">Bir şarkı seçin</p>
-            <p className="text-xs">Müzik kütüphanenizden bir şarkı seçin ve çalmaya başlayın</p>
+            <p className="text-sm font-medium">{t.player.emptyTitle}</p>
+            <p className="text-xs">{t.player.emptySubtitle}</p>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import PlaylistManager from './components/Music/PlaylistManager';
 import Favorites from './components/Music/Favorites';
 import Settings from './components/Settings/Settings';
 import { PlayerProvider } from './context/PlayerContext';
-import { LanguageProvider } from './context/LanguageContext';
+import { useLanguage } from './context/LanguageContext';
 import { Playlist } from './types';
 import { musicAPI } from './services/api';
 import './index.css';
@@ -17,6 +17,7 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('library');
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadPlaylists();
@@ -88,24 +89,22 @@ const App: React.FC = () => {
       default:
         return (
           <div className="p-6">
-            <h1 className="text-2xl font-bold text-white">Hoş Geldiniz!</h1>
-            <p className="text-gray-400">Müzik kütüphanenizi keşfedin.</p>
+            <h1 className="text-2xl font-bold text-white">{t.welcomeTitle}</h1>
+            <p className="text-gray-400">{t.welcomeSubtitle}</p>
           </div>
         );
     }
   };
 
   return (
-    <LanguageProvider>
-      <PlayerProvider>
-        <div className="App h-screen bg-dark-300 text-white">
-          <Layout currentView={currentView} onViewChange={setCurrentView}>
-            {renderContent()}
-          </Layout>
-          <AudioPlayer />
-        </div>
-      </PlayerProvider>
-    </LanguageProvider>
+    <PlayerProvider>
+      <div className="App h-screen bg-dark-300 text-white">
+        <Layout currentView={currentView} onViewChange={setCurrentView}>
+          {renderContent()}
+        </Layout>
+        <AudioPlayer />
+      </div>
+    </PlayerProvider>
   );
 };
 

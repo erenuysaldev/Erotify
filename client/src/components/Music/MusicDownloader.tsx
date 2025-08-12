@@ -148,8 +148,8 @@ const MusicDownloader: React.FC = () => {
     <div className="p-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Müzik İndir</h1>
-        <p className="text-dark-600">Spotify ve YouTube'dan müzik indirin</p>
+        <h1 className="text-3xl font-bold text-white mb-2">{t.download.title}</h1>
+        <p className="text-dark-600">{t.download.subtitle}</p>
       </div>
 
       {/* Service Status */}
@@ -158,7 +158,7 @@ const MusicDownloader: React.FC = () => {
           <div className="flex items-center space-x-3">
             <div className={`w-3 h-3 rounded-full ${isServiceOnline ? 'bg-spotify-500' : 'bg-red-500'}`}></div>
             <span className="text-white font-medium">
-              İndirme Servisi: {isServiceOnline ? 'Çevrimiçi' : 'Çevrimdışı'}
+              {t.download.service}: {isServiceOnline ? t.download.online : t.download.offline}
             </span>
           </div>
           {serviceStatus && (
@@ -172,7 +172,7 @@ const MusicDownloader: React.FC = () => {
         {!isServiceOnline && (
           <div className="mt-3 p-3 bg-red-900/20 rounded border border-red-800">
             <p className="text-red-400 text-sm">
-              İndirme servisi çalışmıyor. Python service'i başlatmak için:
+              {t.download.serviceOffline}
               <code className="block mt-2 bg-dark-800 p-2 rounded">
                 cd python-service && pip install -r requirements.txt && python main.py
               </code>
@@ -183,7 +183,7 @@ const MusicDownloader: React.FC = () => {
         {serviceStatus && !serviceStatus.spotify_configured && (
           <div className="mt-3 p-3 bg-yellow-900/20 rounded border border-yellow-800">
             <p className="text-yellow-400 text-sm">
-              Spotify API ayarlanmamış. Çevresel değişkenler:
+              {t.download.spotifyNotConfigured}
               <code className="block mt-1">SPOTIFY_CLIENT_ID ve SPOTIFY_CLIENT_SECRET</code>
             </p>
           </div>
@@ -192,13 +192,13 @@ const MusicDownloader: React.FC = () => {
 
       {/* URL Download */}
       <div className="mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4">URL'den İndir</h2>
+        <h2 className="text-xl font-semibold text-white mb-4">{t.download.urlDownload}</h2>
         <div className="flex space-x-3">
           <input
             type="text"
             value={downloadUrl}
             onChange={(e) => setDownloadUrl(e.target.value)}
-            placeholder="Spotify veya YouTube URL'sini yapıştırın..."
+            placeholder={t.download.placeholder}
             className="flex-1 bg-dark-200 border border-dark-500 rounded-lg px-4 py-3 text-white placeholder-dark-600 focus:outline-none focus:border-spotify-500"
             disabled={!isServiceOnline}
           />
@@ -208,13 +208,13 @@ const MusicDownloader: React.FC = () => {
             className="btn-spotify px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download className="w-5 h-5 mr-2" />
-            {isBulkDownloading ? 'İndiriliyor...' : 'İndir'}
+            {isBulkDownloading ? t.download.downloading : t.download.downloadButton}
           </button>
         </div>
         <p className="text-sm text-dark-600 mt-2">
-          Desteklenen: Spotify şarkıları, albümleri, çalma listeleri ve YouTube videoları
+          {t.download.supportedFormats || "Desteklenen: Spotify şarkıları, albümleri, çalma listeleri ve YouTube videoları"}
           <br />
-          <span className="text-spotify-500">💡 Playlist/Album linkleri için toplu indirme desteklenir</span>
+          <span className="text-spotify-500">💡 {t.download.playlistBulkInfo || "Playlist/Album linkleri için toplu indirme desteklenir"}</span>
         </p>
       </div>
 

@@ -3,6 +3,8 @@ export const translations = {
     // Genel
     appName: "Erotify",
     loading: "Yükleniyor...",
+  welcomeTitle: "Hoş geldiniz!",
+  welcomeSubtitle: "Müzik kütüphaneni keşfet.",
     save: "Kaydet",
     cancel: "İptal",
     delete: "Sil",
@@ -45,7 +47,7 @@ export const translations = {
       playlist: "ÇALMA LİSTESİ",
       songs: "şarkı"
     },
-    
+
     // Favoriler
     favorites: {
       title: "Beğenilen Şarkılar",
@@ -102,6 +104,7 @@ export const translations = {
     // Müzik İndirme
     download: {
       title: "Müzik İndir",
+      subtitle: "Spotify ve YouTube'dan müzik indirin",
       placeholder: "Spotify URL'si girin",
       downloadButton: "İndir",
       downloading: "İndiriliyor...",
@@ -117,7 +120,16 @@ export const translations = {
       searchResults: "Arama Sonuçları",
       bulkDownload: "Toplu İndirme",
       confirmBulkDownload: "Bu işlem birden fazla şarkı indirecek. Devam etmek istiyor musunuz?",
-      serviceStatus: "Servis Durumu"
+      serviceStatus: "Servis Durumu",
+      service: "İndirme Servisi",
+      online: "Çevrimiçi",
+      offline: "Çevrimdışı",
+      serviceOffline: "İndirme servisi çalışmıyor. Python service'i başlatmak için:",
+      spotifyNotConfigured: "Spotify API ayarlanmamış. Çevresel değişkenler:",
+  urlDownload: "URL'den İndir",
+  downloadsTitle: "İndirmeler",
+  supportedFormats: "Desteklenen: Spotify şarkıları, albümleri, çalma listeleri ve YouTube videoları",
+  playlistBulkInfo: "💡 Playlist/Album linkleri için toplu indirme desteklenir"
     },
     
     // Çalar
@@ -131,7 +143,9 @@ export const translations = {
       volume: "Ses",
       mute: "Sessiz",
       currentTime: "Mevcut Zaman",
-      duration: "Süre"
+  duration: "Süre",
+  emptyTitle: "Bir şarkı seçin",
+  emptySubtitle: "Kütüphaneden bir şarkı seç ve çalmaya başla"
     },
     
     // Ayarlar
@@ -151,8 +165,8 @@ export const translations = {
       settingsError: "Ayarlar kaydedilemedi",
       appInfo: "Uygulama Bilgileri",
       version: "Sürüm",
-      technology: "Teknoloji",
-      features: "Özellikler",
+      technology: "Teknolojiler",
+      features: "Öne Çıkanlar",
       spotifyInstructions: "Spotify API anahtarları nasıl alınır?",
       spotifyStep1: "Spotify Developer Dashboard'a gidin",
       spotifyStep2: "Yeni bir uygulama oluşturun",
@@ -176,6 +190,8 @@ export const translations = {
     // General
     appName: "Erotify",
     loading: "Loading...",
+  welcomeTitle: "Welcome!",
+  welcomeSubtitle: "Explore your music library.",
     save: "Save",
     cancel: "Cancel",
     delete: "Delete",
@@ -275,6 +291,7 @@ export const translations = {
     // Music Download
     download: {
       title: "Download Music",
+      subtitle: "Download music from Spotify and YouTube",
       placeholder: "Enter Spotify URL",
       downloadButton: "Download",
       downloading: "Downloading...",
@@ -289,8 +306,17 @@ export const translations = {
       searchMusic: "Search Music",
       searchResults: "Search Results",
       bulkDownload: "Bulk Download",
-      confirmBulkDownload: "This will download multiple songs. Do you want to continue?",
-      serviceStatus: "Service Status"
+      confirmBulkDownload: "This process will download multiple songs. Do you want to continue?",
+      serviceStatus: "Service Status",
+      service: "Download Service",
+      online: "Online",
+      offline: "Offline",
+      serviceOffline: "Download service is not running. To start Python service:",
+      spotifyNotConfigured: "Spotify API not configured. Environment variables:",
+      urlDownload: "Download from URL",
+      downloadsTitle: "Downloads",
+      supportedFormats: "Supported: Spotify tracks, albums, playlists and YouTube videos",
+      playlistBulkInfo: "💡 Bulk download is supported for playlist/album links"
     },
     
     // Player
@@ -304,7 +330,9 @@ export const translations = {
       volume: "Volume",
       mute: "Mute",
       currentTime: "Current Time",
-      duration: "Duration"
+  duration: "Duration",
+  emptyTitle: "Select a song",
+  emptySubtitle: "Pick something from your library to start playing"
     },
     
     // Settings
@@ -349,6 +377,8 @@ export const translations = {
     // 通用
     appName: "Erotify",
     loading: "加载中...",
+  welcomeTitle: "欢迎！",
+  welcomeSubtitle: "探索你的音乐库。",
     save: "保存",
     cancel: "取消",
     delete: "删除",
@@ -448,6 +478,7 @@ export const translations = {
     // 音乐下载
     download: {
       title: "下载音乐",
+      subtitle: "从 Spotify 和 YouTube 下载音乐",
       placeholder: "输入 Spotify URL",
       downloadButton: "下载",
       downloading: "下载中...",
@@ -463,7 +494,16 @@ export const translations = {
       searchResults: "搜索结果",
       bulkDownload: "批量下载",
       confirmBulkDownload: "这将下载多首歌曲。您想继续吗？",
-      serviceStatus: "服务状态"
+      serviceStatus: "服务状态",
+      service: "下载服务",
+      online: "在线",
+      offline: "离线",
+      serviceOffline: "下载服务未运行。启动 Python 服务:",
+      spotifyNotConfigured: "Spotify API 未配置。环境变量:",
+      urlDownload: "从 URL 下载",
+      downloadsTitle: "下载",
+      supportedFormats: "支持：Spotify 歌曲、专辑、播放列表和 YouTube 视频",
+      playlistBulkInfo: "💡 支持播放列表/专辑链接的批量下载"
     },
     
     // 播放器
@@ -477,7 +517,9 @@ export const translations = {
       volume: "音量",
       mute: "静音",
       currentTime: "当前时间",
-      duration: "时长"
+  duration: "时长",
+  emptyTitle: "选择一首歌曲",
+  emptySubtitle: "从音乐库选择一首歌开始播放"
     },
     
     // 设置

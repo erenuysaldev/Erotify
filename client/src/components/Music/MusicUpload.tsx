@@ -83,7 +83,7 @@ const MusicUpload: React.FC<MusicUploadProps> = ({ onUploadComplete }) => {
       // Start with some progress
       updateProgress(10);
 
-      const song = await musicAPI.uploadSong(file);
+      await musicAPI.uploadSong(file);
       
       updateProgress(100);
       

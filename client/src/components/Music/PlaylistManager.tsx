@@ -13,6 +13,7 @@ import {
 import { Playlist, Song } from '../../types';
 import { musicAPI } from '../../services/api';
 import { usePlayer } from '../../context/PlayerContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const formatTime = (seconds: number): string => {
   if (isNaN(seconds) || seconds === 0) return '--:--';
@@ -26,6 +27,7 @@ interface PlaylistManagerProps {
 }
 
 const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) => {
+  const { t } = useLanguage();
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const [playlistSongs, setPlaylistSongs] = useState<Song[]>([]);
@@ -36,7 +38,7 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
   const [newPlaylistDescription, setNewPlaylistDescription] = useState('');
   const [showDropdown, setShowDropdown] = useState<string | null>(null);
 
-  const { state, playSong, playPlaylist } = usePlayer();
+  const { state, playPlaylist } = usePlayer();
 
   useEffect(() => {
     loadPlaylists();
@@ -161,7 +163,7 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <Music className="w-12 h-12 text-gray-400 mx-auto mb-4 animate-pulse" />
-            <p className="text-gray-400">Playlistler yükleniyor...</p>
+            <p className="text-gray-400">{t.loading}</p>
           </div>
         </div>
       </div>
@@ -172,15 +174,15 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-2">Playlistler</h1>
-          <p className="text-gray-400">{playlists.length} playlist</p>
+          <h1 className="text-2xl font-bold text-white mb-2">{t.playlists.title}</h1>
+          <p className="text-gray-400">{playlists.length} {t.playlists.title.toLowerCase()}</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
           className="btn-primary flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
-          Yeni Playlist
+          {t.playlists.create}
         </button>
       </div>
 
@@ -189,13 +191,13 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
         <div className="col-span-4">
           <div className="bg-dark-200 rounded-lg overflow-hidden">
             <div className="p-4 border-b border-gray-700">
-              <h3 className="font-medium text-white">Tüm Playlistler</h3>
+              <h3 className="font-medium text-white">{t.playlists.title}</h3>
             </div>
             
             {playlists.length === 0 ? (
               <div className="p-8 text-center">
                 <Music className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-400 text-sm">Henüz playlist yok</p>
+                <p className="text-gray-400 text-sm">{t.playlists.noPlaylists}</p>
               </div>
             ) : (
               <div className="max-h-96 overflow-y-auto">
@@ -245,7 +247,7 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                               className="w-full px-4 py-2 text-left text-sm text-white hover:bg-dark-200 flex items-center gap-2"
                             >
                               <Edit3 className="w-4 h-4" />
-                              Düzenle
+                              {t.edit}
                             </button>
                             <button
                               onClick={(e) => {
@@ -256,7 +258,7 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                               className="w-full px-4 py-2 text-left text-sm text-red-400 hover:bg-dark-200 flex items-center gap-2"
                             >
                               <Trash2 className="w-4 h-4" />
-                              Sil
+                              {t.delete}
                             </button>
                           </div>
                         )}
@@ -285,11 +287,11 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                         {selectedPlaylist.name}
                       </h2>
                       <p className="text-gray-400 mb-2">
-                        {selectedPlaylist.description || 'Açıklama yok'}
+                        {selectedPlaylist.description || t.playlists.description}
                       </p>
                       <p className="text-sm text-gray-500">
-                        {playlistSongs.length} şarkı • 
-                        Oluşturulma: {new Date(selectedPlaylist.createdAt).toLocaleDateString('tr-TR')}
+                        {playlistSongs.length} {t.library.songs} • 
+                        {t.library.dateAdded}: {new Date(selectedPlaylist.createdAt).toLocaleDateString('tr-TR')}
                       </p>
                     </div>
                   </div>
@@ -309,9 +311,9 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
               {playlistSongs.length === 0 ? (
                 <div className="p-8 text-center">
                   <Music className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-white mb-2">Playlist boş</h3>
+                  <h3 className="text-lg font-medium text-white mb-2">{t.playlists.noPlaylists}</h3>
                   <p className="text-gray-400">
-                    Bu playlist'e müzik kütüphanenizden şarkı ekleyin
+                    {t.playlists.createFirst}
                   </p>
                 </div>
               ) : (
@@ -319,9 +321,9 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                   {/* Header */}
                   <div className="grid grid-cols-12 gap-4 p-4 border-b border-gray-700 text-sm font-medium text-gray-400">
                     <div className="col-span-1">#</div>
-                    <div className="col-span-5">BAŞLIK</div>
-                    <div className="col-span-3">ALBÜM</div>
-                    <div className="col-span-2">EKLENME TARİHİ</div>
+                    <div className="col-span-5">{t.library.title}</div>
+                    <div className="col-span-3">{t.library.album}</div>
+                    <div className="col-span-2">{t.library.dateAdded}</div>
                     <div className="col-span-1 flex justify-center">
                       <Clock className="w-4 h-4" />
                     </div>
@@ -370,7 +372,7 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
 
                         {/* Album */}
                         <div className="col-span-3 flex items-center">
-                          <p className="text-sm text-gray-400">{song.album || 'Bilinmeyen Albüm'}</p>
+                          <p className="text-sm text-gray-400">{song.album || t.library.unknown}</p>
                         </div>
 
                         {/* Date Added */}
@@ -399,9 +401,9 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
           ) : (
             <div className="bg-dark-200 rounded-lg p-8 text-center">
               <Music className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">Playlist Seçin</h3>
+              <h3 className="text-lg font-medium text-white mb-2">{t.playlists.title}</h3>
               <p className="text-gray-400">
-                Sol taraftan bir playlist seçerek şarkıları görüntüleyin
+                {t.playlists.createFirst}
               </p>
             </div>
           )}
@@ -412,33 +414,33 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
       {showCreateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-dark-200 rounded-lg p-6 w-96">
-            <h3 className="text-lg font-medium text-white mb-4">Yeni Playlist Oluştur</h3>
+            <h3 className="text-lg font-medium text-white mb-4">{t.playlists.create}</h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Playlist Adı *
+                  {t.playlists.name} *
                 </label>
                 <input
                   type="text"
                   value={newPlaylistName}
                   onChange={(e) => setNewPlaylistName(e.target.value)}
                   className="w-full px-3 py-2 bg-dark-100 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
-                  placeholder="Playlist adını girin"
+                  placeholder={t.playlists.name}
                   autoFocus
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Açıklama
+                  {t.playlists.description}
                 </label>
                 <textarea
                   value={newPlaylistDescription}
                   onChange={(e) => setNewPlaylistDescription(e.target.value)}
                   className="w-full px-3 py-2 bg-dark-100 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500 resize-none"
                   rows={3}
-                  placeholder="Playlist açıklaması (opsiyonel)"
+                  placeholder={t.playlists.description}
                 />
               </div>
             </div>
@@ -448,14 +450,14 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                 onClick={() => setShowCreateModal(false)}
                 className="flex-1 px-4 py-2 text-gray-400 hover:text-white transition-colors"
               >
-                İptal
+                {t.cancel}
               </button>
               <button
                 onClick={handleCreatePlaylist}
                 disabled={!newPlaylistName.trim()}
                 className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Oluştur
+                {t.playlists.create}
               </button>
             </div>
           </div>
@@ -466,33 +468,33 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
       {showEditModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-dark-200 rounded-lg p-6 w-96">
-            <h3 className="text-lg font-medium text-white mb-4">Playlist Düzenle</h3>
+            <h3 className="text-lg font-medium text-white mb-4">{t.playlists.editPlaylist}</h3>
             
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Playlist Adı *
+                  {t.playlists.name} *
                 </label>
                 <input
                   type="text"
                   value={newPlaylistName}
                   onChange={(e) => setNewPlaylistName(e.target.value)}
                   className="w-full px-3 py-2 bg-dark-100 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500"
-                  placeholder="Playlist adını girin"
+                  placeholder={t.playlists.name}
                   autoFocus
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Açıklama
+                  {t.playlists.description}
                 </label>
                 <textarea
                   value={newPlaylistDescription}
                   onChange={(e) => setNewPlaylistDescription(e.target.value)}
                   className="w-full px-3 py-2 bg-dark-100 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-primary-500 resize-none"
                   rows={3}
-                  placeholder="Playlist açıklaması (opsiyonel)"
+                  placeholder={t.playlists.description}
                 />
               </div>
             </div>
@@ -502,14 +504,14 @@ const PlaylistManager: React.FC<PlaylistManagerProps> = ({ onPlaylistChange }) =
                 onClick={() => setShowEditModal(false)}
                 className="flex-1 px-4 py-2 text-gray-400 hover:text-white transition-colors"
               >
-                İptal
+                {t.cancel}
               </button>
               <button
                 onClick={handleUpdatePlaylist}
                 disabled={!newPlaylistName.trim()}
                 className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Güncelle
+                {t.save}
               </button>
             </div>
           </div>

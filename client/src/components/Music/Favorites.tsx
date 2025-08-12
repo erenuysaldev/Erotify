@@ -5,8 +5,6 @@ import {
   MoreVertical,
   Clock,
   Music,
-  Trash2,
-  Plus,
   Heart,
   HeartOff
 } from 'lucide-react';

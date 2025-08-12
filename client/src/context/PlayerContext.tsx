@@ -278,6 +278,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.repeatMode]);
 
   // Update audio source when current song changes
@@ -305,6 +306,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.currentSong, state.volume, state.isMuted]);
 
   // Handle play/pause state changes
@@ -338,6 +340,7 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     } else {
       audio.pause();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isPlaying]);
 
   return (
