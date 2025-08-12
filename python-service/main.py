@@ -1,3 +1,15 @@
+"""
+Erotify Music Download Service
+
+A FastAPI service for downloading music from Spotify and YouTube.
+Powered by SpotDL - https://github.com/spotDL/spotify-downloader
+
+This service provides download capabilities for the Erotify music player.
+Special thanks to the SpotDL team for their amazing work!
+
+MIT License - Copyright (c) 2025 Eren Uysal
+"""
+
 import os
 import json
 import asyncio

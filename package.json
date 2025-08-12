@@ -23,8 +23,14 @@
     "local",
     "self-hosted",
     "spotify",
+    "youtube",
+    "spotdl",
     "opensource",
-    "playlist"
+    "playlist",
+    "download",
+    "react",
+    "typescript",
+    "nodejs"
   ],
   "author": "Eren",
   "license": "MIT",

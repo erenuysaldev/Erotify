@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Erotify server - Local music player backend",
   "main": "dist/index.js",
+  "license": "MIT",
+  "author": "Eren Uysal",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",

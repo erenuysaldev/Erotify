@@ -92,14 +92,6 @@ pip install -r requirements.txt
 # Setup Spotify API credentials (optional but recommended)
 # Get Client ID and Secret from https://developer.spotify.com/dashboard
 
-# Windows PowerShell:
-$env:SPOTIFY_CLIENT_ID="your_client_id"
-$env:SPOTIFY_CLIENT_SECRET="your_client_secret"
-
-# Linux/Mac:
-export SPOTIFY_CLIENT_ID="your_client_id"
-export SPOTIFY_CLIENT_SECRET="your_client_secret"
-```
 
 #### 4. Start the Application
 
@@ -214,47 +206,8 @@ erotify/
 - **Spotify Integration**: Configure your Spotify API credentials
 - **Connection Testing**: Test your Spotify API setup
 
-#### Environment Variables
-Create a `.env` file in the server directory:
 
-```env
-PORT=3001
-NODE_ENV=production
-MAX_FILE_SIZE=52428800  # 50MB
-UPLOAD_DIR=./upload
-DATA_DIR=./data
-```
 
-### 🌐 Deployment
-
-#### Digital Ocean Droplet
-1. Create a new Ubuntu 22.04 droplet (minimum 1GB RAM, 25GB disk)
-2. Add your SSH key during creation
-3. Follow the server setup instructions
-
-#### Server Setup
-```bash
-# Connect to your server
-ssh root@your-droplet-ip
-
-# Install Node.js
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Install PM2 (process manager)
-sudo npm install -g pm2
-
-# Clone and setup project
-git clone https://github.com/erenuysaldev/erotify.git
-cd erotify
-npm run install:all
-npm run build
-
-# Start with PM2
-pm2 start server/dist/index.js --name "erotify"
-pm2 startup
-pm2 save
-```
 
 ### 🤝 Contributing
 
@@ -367,14 +320,7 @@ pip install -r requirements.txt
 # Spotify API kimlik bilgilerini ayarlayın (isteğe bağlı ama önerilen)
 # https://developer.spotify.com/dashboard adresinden Client ID ve Secret alın
 
-# Windows PowerShell:
-$env:SPOTIFY_CLIENT_ID="your_client_id"
-$env:SPOTIFY_CLIENT_SECRET="your_client_secret"
 
-# Linux/Mac:
-export SPOTIFY_CLIENT_ID="your_client_id"
-export SPOTIFY_CLIENT_SECRET="your_client_secret"
-```
 
 #### 4. Uygulamayı Başlatın
 
@@ -408,3 +354,30 @@ npm start
 - Ana uygulama: `http://localhost:3000`
 - İndirme servisi API: `http://localhost:8000` (isteğe bağlı)
 - Node.js API: `http://localhost:3001/api`
+
+### 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### 🙏 Acknowledgments
+
+This project uses the following open source libraries and tools:
+
+- **[SpotDL](https://github.com/spotDL/spotify-downloader)** - The amazing Python library that enables Spotify and YouTube music downloading functionality
+- **[React](https://reactjs.org/)** - The web framework that powers our frontend
+- **[Node.js](https://nodejs.org/)** - JavaScript runtime for our backend
+- **[Tailwind CSS](https://tailwindcss.com/)** - For beautiful and responsive styling
+- **[Lucide React](https://lucide.dev/)** - For clean and consistent icons
+- **[FastAPI](https://fastapi.tiangolo.com/)** - Python web framework for our download service
+- **[Spotify Web API](https://developer.spotify.com/documentation/web-api/)** - For accessing Spotify's music catalog
+
+Special thanks to the [SpotDL](https://github.com/spotDL/spotify-downloader) team for creating such a powerful tool that makes music downloading possible in Erotify.
+
+### 📞 Support
+
+- GitHub Issues: [Report Issues](https://github.com/erenuysaldev/erotify/issues)
+- Documentation: [Wiki](https://github.com/erenuysaldev/erotify/wiki)
+
+---
+
+**Enjoy listening to music with Erotify! 🎵**
