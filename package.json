@@ -1,0 +1,79 @@
+{
+  "name": "erotify",
+  "version": "1.0.0",
+  "description": "Open source local music player - Self-hosted Spotify alternative",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm start",
+    "build": "npm run client:build && npm run server:build",
+    "client:build": "cd client && npm run build",
+    "server:build": "cd server && npm run build",
+    "start": "cd server && npm start",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:pack": "npm run build && electron-builder",
+    "electron:dist": "npm run build && electron-builder --publish=never"
+  },
+  "keywords": [
+    "music",
+    "player",
+    "local",
+    "self-hosted",
+    "spotify",
+    "opensource",
+    "playlist"
+  ],
+  "author": "Eren",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3",
+    "electron-is-dev": "^3.0.1",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.erotify.app",
+    "productName": "Erotify",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/**/*",
+      "client/build/**/*",
+      "server/dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "uploads",
+        "to": "uploads",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "data",
+        "to": "data",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "assets/icon.icns",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "target": "AppImage"
+    }
+  }
+}

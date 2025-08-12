@@ -1,0 +1,268 @@
+import React, { useState, useEffect } from 'react';
+
+
+import {
+  Play,
+  Pause,
+  MoreVertical,
+  Clock,
+  Music,
+  Trash2,
+  Plus,
+  Heart,
+  HeartOff
+} from 'lucide-react';
+import { Song, Playlist } from '../../types';
+import { musicAPI } from '../../services/api';
+import { usePlayer } from '../../context/PlayerContext';
+
+const formatTime = (seconds: number): string => {
+  if (isNaN(seconds) || seconds === 0) return '--:--';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
+interface FavoritesProps {
+  playlists: Playlist[];
+  onPlaylistsChange: () => void;
+}
+
+const Favorites: React.FC<FavoritesProps> = ({ playlists, onPlaylistsChange }) => {
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showDropdown, setShowDropdown] = useState<string | null>(null);
+  const [showPlaylistModal, setShowPlaylistModal] = useState<string | null>(null);
+  const [hoveredSong, setHoveredSong] = useState<string | null>(null);
+  const { state, playSong, playPlaylist } = usePlayer();
+
+  useEffect(() => {
+    loadFavorites();
+  }, []);
+
+  const loadFavorites = async () => {
+    try {
+      setLoading(true);
+      const favoritesData = await musicAPI.getFavorites();
+      setSongs(favoritesData);
+    } catch (error) {
+      console.error('Favori şarkılar yüklenirken hata:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePlaySong = (song: Song, index: number) => {
+    if (state.currentSong?.id === song.id) {
+      return;
+    }
+    playSong(song);
+  };
+
+  const handleToggleFavorite = async (songId: string) => {
+    try {
+      await musicAPI.toggleFavorite(songId);
+      await loadFavorites(); // Favoriler listesini yenile
+    } catch (error) {
+      console.error('Favori durumu değiştirilemedi:', error);
+    }
+  };
+
+  const handleAddToPlaylist = async (playlistId: string, songId: string) => {
+    try {
+      await musicAPI.addSongToPlaylist(playlistId, songId);
+      setShowPlaylistModal(null);
+      setShowDropdown(null);
+      onPlaylistsChange();
+    } catch (error) {
+      console.error('Şarkı çalma listesine eklenirken hata:', error);
+    }
+  };
+
+  const PlaylistModal = ({ songId }: { songId: string }) => (
+    <div className="absolute right-0 mt-2 w-48 bg-dark-300 rounded-md shadow-xl border border-dark-500 z-10">
+      <div className="p-2">
+        <p className="text-xs text-dark-600 uppercase font-semibold mb-2">Çalma Listesine Ekle</p>
+        {playlists.map((playlist) => (
+          <button
+            key={playlist.id}
+            onClick={() => handleAddToPlaylist(playlist.id, songId)}
+            className="w-full text-left px-2 py-1 text-sm text-white hover:bg-dark-400 rounded transition-colors"
+          >
+            {playlist.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-white">Favori şarkılar yükleniyor...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex items-end space-x-6 mb-8">
+        <div className="w-60 h-60 bg-gradient-to-br from-purple-800 to-blue-600 rounded-lg shadow-2xl flex items-center justify-center">
+          <Heart className="w-24 h-24 text-white" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-white mb-2">ÇALMA LİSTESİ</p>
+          <h1 className="text-6xl font-black text-white mb-4">Beğenilen Şarkılar</h1>
+          <p className="text-dark-600 mb-4">
+            <span className="text-white font-semibold">Erotify</span> • {songs.length} şarkı
+          </p>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex items-center space-x-6 mb-8">
+        <button
+          onClick={() => songs.length > 0 && playPlaylist(songs, 0)}
+          className="btn-play w-14 h-14"
+          disabled={songs.length === 0}
+        >
+          <Play className="w-6 h-6 ml-1" />
+        </button>
+        <button className="text-dark-600 hover:text-white transition-colors p-2">
+          <Heart className="w-8 h-8 text-red-500" />
+        </button>
+      </div>
+
+      {/* Song List */}
+      {songs.length === 0 ? (
+        <div className="text-center py-12">
+          <Heart className="w-16 h-16 text-dark-600 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">Henüz favori şarkınız yok</h3>
+          <p className="text-dark-600 mb-4">Sevdiğiniz şarkıları beğenerek buraya ekleyebilirsiniz</p>
+        </div>
+      ) : (
+        <>
+          {/* Table Header */}
+          <div className="grid grid-cols-12 gap-4 text-sm text-dark-600 uppercase font-semibold border-b border-dark-500 pb-3 mb-4">
+            <div className="col-span-1 text-center">#</div>
+            <div className="col-span-5">Başlık</div>
+            <div className="col-span-3">Albüm</div>
+            <div className="col-span-2 text-center">
+              <Clock className="w-4 h-4 mx-auto" />
+            </div>
+            <div className="col-span-1"></div>
+          </div>
+
+          {/* Song List */}
+          <div className="space-y-1">
+            {songs.map((song, index) => (
+              <div
+                key={song.id}
+                className={`group grid grid-cols-12 gap-4 p-2 rounded-lg hover:bg-dark-400 transition-colors items-center ${
+                  state.currentSong?.id === song.id ? 'bg-dark-400' : ''
+                }`}
+                onMouseEnter={() => setHoveredSong(song.id)}
+                onMouseLeave={() => setHoveredSong(null)}
+              >
+                {/* Index/Play Button */}
+                <div className="col-span-1 flex items-center justify-center">
+                  {hoveredSong === song.id ? (
+                    <button
+                      onClick={() => handlePlaySong(song, index)}
+                      className="text-white hover:text-spotify-500 transition-colors"
+                    >
+                      {state.currentSong?.id === song.id && state.isPlaying ? (
+                        <Pause className="w-5 h-5" />
+                      ) : (
+                        <Play className="w-5 h-5" />
+                      )}
+                    </button>
+                  ) : (
+                    <span className="text-sm text-dark-600">{index + 1}</span>
+                  )}
+                </div>
+
+                {/* Song Info */}
+                <div className="col-span-5 flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-dark-500 rounded flex items-center justify-center">
+                    <Music className="w-5 h-5 text-dark-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-medium truncate">{song.title}</p>
+                    <p className="text-sm text-dark-600 truncate">{song.artist}</p>
+                  </div>
+                </div>
+
+                {/* Album */}
+                <div className="col-span-3 flex items-center">
+                  <p className="text-sm text-dark-600 truncate">{song.album || 'Bilinmiyor'}</p>
+                </div>
+
+                {/* Duration */}
+                <div className="col-span-2 flex items-center justify-center">
+                  <p className="text-sm text-dark-600">{formatTime(song.duration)}</p>
+                </div>
+
+                {/* Actions */}
+                <div className="col-span-1 flex items-center justify-end">
+                  <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => handleToggleFavorite(song.id)}
+                      className="text-red-500 hover:text-red-400 transition-colors p-1"
+                    >
+                      <Heart className="w-4 h-4 fill-current" />
+                    </button>
+                    <div className="relative">
+                      <button
+                        onClick={() => setShowDropdown(showDropdown === song.id ? null : song.id)}
+                        className="text-dark-600 hover:text-white transition-colors p-1"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                      {showDropdown === song.id && (
+                        <div className="absolute right-0 mt-2 w-48 bg-dark-300 rounded-md shadow-xl border border-dark-500 z-10">
+                          <button
+                            onClick={() => {
+                              setShowPlaylistModal(song.id);
+                              setShowDropdown(null);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-white hover:bg-dark-400 transition-colors flex items-center space-x-2"
+                          >
+                            <Plus className="w-4 h-4" />
+                            <span>Çalma Listesine Ekle</span>
+                          </button>
+                          <button
+                            onClick={() => handleToggleFavorite(song.id)}
+                            className="w-full text-left px-4 py-2 text-sm text-white hover:bg-dark-400 transition-colors flex items-center space-x-2"
+                          >
+                            <HeartOff className="w-4 h-4" />
+                            <span>Favorilerden Çıkar</span>
+                          </button>
+                        </div>
+                      )}
+                      {showPlaylistModal === song.id && <PlaylistModal songId={song.id} />}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Click outside to close dropdowns */}
+      {(showDropdown || showPlaylistModal) && (
+        <div
+          className="fixed inset-0 z-5"
+          onClick={() => {
+            setShowDropdown(null);
+            setShowPlaylistModal(null);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Favorites;
