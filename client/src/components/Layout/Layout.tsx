@@ -13,7 +13,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onViewChange }) 
   
   const mainMenuItems = [
     { id: 'library', label: t.nav.home, icon: Home },
-    { id: 'search', label: t.nav.search, icon: Search },
     { id: 'playlists', label: t.nav.library, icon: Library },
   ];
 

@@ -1,68 +1,352 @@
 # 🎵 Erotify - Open Source Music Player
 
-Erotify, herkes tarafından kendi sunucusunda barındırılabilen, açık kaynak bir müzik çalıcı uygulamasıdır. Spotify benzeri arayüzü ile kendi müzik koleksiyonunuzu yönetebilir, playlist oluşturabilir ve sevdiğiniz şarkıları dinleyebilirsiniz.
+[🇹🇷 Türkçe](#türkçe) | [🇺🇸 English](#english)
 
-## ✨ Özellikler
+---
 
-- 🎵 **Yerel Müzik Depolama**: Kendi müziklerinizi yükleyin ve yönetin
-- 🎼 **Müzik İndirme**: Spotify ve YouTube'dan müzik indirme (SpotDL entegrasyonu)
-- 📱 **Modern Arayüz**: React + TypeScript ile geliştirilmiş responsive tasarım
-- 🎨 **Spotify Benzeri UI**: Tanıdık ve kullanıcı dostu arayüz
-- 📂 **Playlist Yönetimi**: Kendi playlistlerinizi oluşturun ve düzenleyin
-- 🔊 **Gelişmiş Ses Kontrolü**: Volume, shuffle, repeat modları
-- 📤 **Kolay Yükleme**: Drag & drop ile müzik yükleme
-- 🔍 **Müzik Arama**: Spotify veritabanında şarkı arama
-- 🎯 **Metadata Desteği**: Otomatik şarkı bilgisi tanıma
-- 🔍 **Arama ve Filtreleme**: Müzik kütüphanenizde kolayca arama yapın
-- 🌐 **Self-Hosted**: Kendi sunucunuzda barındırın, veritabanı gerekmez
-- 🔓 **Hesap Gerektirmez**: Kullanıcı kaydı veya giriş gerekmez
+## English
 
-## 🛠️ Teknoloji Stack
+**Erotify** is a self-hosted, open-source music player application inspired by Spotify's interface. Built with modern web technologies, it allows you to manage your personal music collection, create playlists, and enjoy your favorite songs with a beautiful, responsive interface.
 
-### Frontend
+### ✨ Features
+
+- 🎵 **Local Music Storage**: Upload and manage your own music collection
+- 🎼 **Music Download**: Download music from Spotify and YouTube using SpotDL integration
+- 📱 **Modern Interface**: Responsive design built with React + TypeScript
+- 🎨 **Spotify-like UI**: Familiar and user-friendly interface
+- 📂 **Playlist Management**: Create and organize your custom playlists
+- ❤️ **Favorites System**: Mark songs as favorites for quick access
+- 🔊 **Advanced Audio Controls**: Volume, shuffle, repeat modes
+- 📤 **Easy Upload**: Drag & drop file upload with metadata extraction
+- 🔍 **Music Search**: Search Spotify database for new music
+- 🎯 **Metadata Support**: Automatic song information recognition
+- 🌐 **Multi-language**: Support for Turkish, English, and Chinese
+- ⚙️ **Settings Management**: Configure Spotify API credentials
+- 🔓 **No Account Required**: No user registration or login needed
+- 🌐 **Self-Hosted**: Run on your own server, no database required
+
+### 🛠️ Technology Stack
+
+#### Frontend
 - **React 18** - Modern UI framework
-- **TypeScript** - Type safety
+- **TypeScript** - Type safety and better development experience
 - **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Beautiful icons
-- **Axios** - HTTP client
+- **Lucide React** - Beautiful and consistent icons
+- **Axios** - HTTP client for API requests
+- **React Context** - State management for audio player and language
 
-### Backend
-- **Node.js** - JavaScript runtime
-- **Express** - Web framework
-- **TypeScript** - Type safety
-- **Multer** - File upload handling
-- **music-metadata** - Audio metadata extraction
+#### Backend
+- **Node.js** - JavaScript runtime environment
+- **Express** - Minimal and flexible web application framework
+- **TypeScript** - Type safety for backend code
+- **Multer** - Middleware for handling file uploads
+- **music-metadata** - Library for extracting audio metadata
 - **fs-extra** - Enhanced file system utilities
 
-### Download Service
-- **Python** - Backend language for download service
-- **FastAPI** - Modern Python web framework
-- **SpotDL** - Spotify/YouTube downloader
-- **Spotify API** - Music metadata and search
-- **YouTube-DL** - Video/audio extraction
+#### Download Service
+- **Python 3.9+** - Backend language for download service
+- **FastAPI** - Modern, fast web framework for building APIs
+- **SpotDL** - Download songs from Spotify and YouTube
+- **Spotify Web API** - Access to Spotify's music catalog
+- **yt-dlp** - Enhanced YouTube downloader
 
-### Storage
+#### Storage
 - **JSON Files** - Simple local data storage
-- **Local File System** - Music file storage
-- No database required!
+- **File System** - Direct music file storage
+- **No Database Required** - Simplified deployment and maintenance
 
-## 🚀 Kurulum
+### 🚀 Installation
 
-### Gereksinimler
-- Node.js 18+ 
-- npm veya yarn
-- Python 3.9+ (müzik indirme servisi için)
+#### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Python 3.9+ (for download service)
 - pip (Python package manager)
 
-### 1. Projeyi İndirin
+#### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/erotify.git
+git clone https://github.com/erenuysaldev/erotify.git
 cd erotify
 ```
 
-### 2. Bağımlılıkları Kurun
+#### 2. Install Dependencies
 ```bash
-# Tüm bağımlılıkları tek seferde kurmak için
+# Install all dependencies at once
+npm run install:all
+
+# Or manually
+npm install
+cd server && npm install
+cd ../client && npm install
+```
+
+#### 3. Setup Download Service (Optional)
+
+For downloading music from Spotify and YouTube:
+
+```bash
+# Install Python dependencies
+cd python-service
+pip install -r requirements.txt
+
+# Setup Spotify API credentials (optional but recommended)
+# Get Client ID and Secret from https://developer.spotify.com/dashboard
+
+# Windows PowerShell:
+$env:SPOTIFY_CLIENT_ID="your_client_id"
+$env:SPOTIFY_CLIENT_SECRET="your_client_secret"
+
+# Linux/Mac:
+export SPOTIFY_CLIENT_ID="your_client_id"
+export SPOTIFY_CLIENT_SECRET="your_client_secret"
+```
+
+#### 4. Start the Application
+
+##### Development Mode
+```bash
+# Start all services (requires 3 terminals)
+
+# Terminal 1: Node.js backend
+cd server
+npm run dev
+
+# Terminal 2: Python download service
+cd python-service
+python main.py
+
+# Terminal 3: React frontend
+cd client
+npm start
+```
+
+##### Production Mode
+```bash
+# Build the application
+npm run build
+
+# Start in production mode
+npm start
+```
+
+#### 5. Access the Application
+- Main app: `http://localhost:3000`
+- Download service API: `http://localhost:8000` (optional)
+- Node.js API: `http://localhost:3001/api`
+
+### 📁 Project Structure
+
+```
+erotify/
+├── client/                 # React frontend application
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   │   ├── Layout/     # App layout components
+│   │   │   ├── Music/      # Music-related components
+│   │   │   ├── Player/     # Audio player components
+│   │   │   └── Settings/   # Settings components
+│   │   ├── context/        # React context providers
+│   │   ├── i18n/          # Internationalization files
+│   │   ├── services/       # API service functions
+│   │   ├── types/          # TypeScript type definitions
+│   │   └── ...
+│   └── package.json
+├── server/                 # Node.js backend
+│   ├── src/
+│   │   ├── routes/         # Express route handlers
+│   │   ├── utils/          # Utility functions
+│   │   ├── types/          # TypeScript type definitions
+│   │   └── index.ts        # Main server file
+│   └── package.json
+├── python-service/         # Download service (Python + FastAPI)
+│   ├── main.py            # FastAPI application
+│   └── requirements.txt   # Python dependencies
+├── upload/                 # Uploaded music files storage
+├── data/                   # JSON data files
+│   ├── songs.json          # Song metadata
+│   ├── playlists.json      # Playlist data
+│   └── settings.json       # Application settings
+└── package.json           # Root package.json with scripts
+```
+
+### 🎯 Usage Guide
+
+#### Uploading Music
+1. Click on "Upload File" in the left sidebar
+2. Drag and drop music files or click "Browse"
+3. Supported formats: MP3, WAV, OGG, FLAC, M4A, AAC
+4. Files are automatically processed and added to your library
+
+#### Downloading Music
+1. Click on "Download Music" in the left sidebar
+2. **URL Download**: Paste Spotify or YouTube URLs
+3. **Search Download**: Search for songs by name
+4. Monitor download progress in real-time
+5. Downloaded songs are automatically added to your library
+
+**Supported Links:**
+- Spotify tracks: `https://open.spotify.com/track/...`
+- Spotify albums: `https://open.spotify.com/album/...`
+- Spotify playlists: `https://open.spotify.com/playlist/...`
+- YouTube videos: `https://youtube.com/watch?v=...`
+
+#### Playing Music
+1. View your songs in "Your Library"
+2. Click on any song to start playing
+3. Use the bottom player controls
+4. Enable shuffle and repeat modes as needed
+
+#### Managing Playlists
+1. Go to "Create Playlist" section
+2. Click "New Playlist" button
+3. Add songs using the "..." menu next to each song
+4. Organize your music collection efficiently
+
+#### Favorites System
+1. Click the heart icon next to any song to add to favorites
+2. Access your favorite songs from the "Liked Songs" section
+3. Favorites are saved locally and persist between sessions
+
+### ⚙️ Configuration
+
+#### Settings Panel
+- **Language Selection**: Switch between Turkish, English, and Chinese
+- **Spotify Integration**: Configure your Spotify API credentials
+- **Connection Testing**: Test your Spotify API setup
+
+#### Environment Variables
+Create a `.env` file in the server directory:
+
+```env
+PORT=3001
+NODE_ENV=production
+MAX_FILE_SIZE=52428800  # 50MB
+UPLOAD_DIR=./upload
+DATA_DIR=./data
+```
+
+### 🌐 Deployment
+
+#### Digital Ocean Droplet
+1. Create a new Ubuntu 22.04 droplet (minimum 1GB RAM, 25GB disk)
+2. Add your SSH key during creation
+3. Follow the server setup instructions
+
+#### Server Setup
+```bash
+# Connect to your server
+ssh root@your-droplet-ip
+
+# Install Node.js
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Install PM2 (process manager)
+sudo npm install -g pm2
+
+# Clone and setup project
+git clone https://github.com/erenuysaldev/erotify.git
+cd erotify
+npm run install:all
+npm run build
+
+# Start with PM2
+pm2 start server/dist/index.js --name "erotify"
+pm2 startup
+pm2 save
+```
+
+### 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### 📝 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+### 🐛 Bug Reports
+
+If you encounter any bugs or have feature requests, please use GitHub Issues.
+
+### 📞 Support
+
+- GitHub Issues: [Report Issues](https://github.com/erenuysaldev/erotify/issues)
+- Documentation: [Wiki](https://github.com/erenuysaldev/erotify/wiki)
+
+---
+
+## Türkçe
+
+**Erotify**, Spotify arayüzünden ilham alan, kendi sunucunuzda barındırabileceğiniz açık kaynak bir müzik çalar uygulamasıdır. Modern web teknolojileri ile geliştirilmiş olup, kişisel müzik koleksiyonunuzu yönetmenize, çalma listeleri oluşturmanıza ve güzel, duyarlı bir arayüzle favori şarkılarınızı dinlemenize olanak tanır.
+
+### ✨ Özellikler
+
+- 🎵 **Yerel Müzik Depolama**: Kendi müzik koleksiyonunuzu yükleyin ve yönetin
+- 🎼 **Müzik İndirme**: SpotDL entegrasyonu ile Spotify ve YouTube'dan müzik indirme
+- 📱 **Modern Arayüz**: React + TypeScript ile geliştirilmiş duyarlı tasarım
+- 🎨 **Spotify Benzeri Arayüz**: Tanıdık ve kullanıcı dostu arayüz
+- 📂 **Çalma Listesi Yönetimi**: Özel çalma listelerinizi oluşturun ve düzenleyin
+- ❤️ **Favoriler Sistemi**: Şarkıları favorilere ekleyerek hızlı erişim
+- 🔊 **Gelişmiş Ses Kontrolleri**: Ses seviyesi, karıştırma, tekrar modları
+- 📤 **Kolay Yükleme**: Metadata çıkarma ile sürükle-bırak dosya yükleme
+- 🔍 **Müzik Arama**: Yeni müzikler için Spotify veritabanında arama
+- 🎯 **Metadata Desteği**: Otomatik şarkı bilgisi tanıma
+- 🌐 **Çok Dilli**: Türkçe, İngilizce ve Çince desteği
+- ⚙️ **Ayar Yönetimi**: Spotify API kimlik bilgilerini yapılandırma
+- 🔓 **Hesap Gerektirmez**: Kullanıcı kaydı veya girişi gerekmez
+- 🌐 **Kendi Sunucunuzda**: Kendi sunucunuzda çalıştırın, veritabanı gerekmez
+
+### �️ Teknoloji Yığını
+
+#### Ön Yüz (Frontend)
+- **React 18** - Modern kullanıcı arayüzü çerçevesi
+- **TypeScript** - Tip güvenliği ve gelişmiş geliştirme deneyimi
+- **Tailwind CSS** - Yardımcı program öncelikli CSS çerçevesi
+- **Lucide React** - Güzel ve tutarlı simgeler
+- **Axios** - API istekleri için HTTP istemcisi
+- **React Context** - Ses çalar ve dil için durum yönetimi
+
+#### Arka Yüz (Backend)
+- **Node.js** - JavaScript çalışma zamanı ortamı
+- **Express** - Minimal ve esnek web uygulama çerçevesi
+- **TypeScript** - Arka yüz kodu için tip güvenliği
+- **Multer** - Dosya yüklemelerini işleyen ara yazılım
+- **music-metadata** - Ses metadata'sını çıkaran kütüphane
+- **fs-extra** - Gelişmiş dosya sistemi yardımcı programları
+
+#### İndirme Servisi
+- **Python 3.9+** - İndirme servisi için arka yüz dili
+- **FastAPI** - API oluşturmak için modern, hızlı web çerçevesi
+- **SpotDL** - Spotify ve YouTube'dan şarkı indirme
+- **Spotify Web API** - Spotify'ın müzik kataloğuna erişim
+- **yt-dlp** - Gelişmiş YouTube indirici
+
+#### Depolama
+- **JSON Dosyaları** - Basit yerel veri depolaması
+- **Dosya Sistemi** - Doğrudan müzik dosyası depolaması
+- **Veritabanı Gerektirmez** - Basitleştirilmiş dağıtım ve bakım
+
+### � Kurulum
+
+#### Gereksinimler
+- Node.js 18+
+- npm veya yarn
+- Python 3.9+ (indirme servisi için)
+- pip (Python paket yöneticisi)
+
+#### 1. Depoyu Klonlayın
+```bash
+git clone https://github.com/erenuysaldev/erotify.git
+cd erotify
+```
+
+#### 2. Bağımlılıkları Kurun
+```bash
+# Tüm bağımlılıkları tek seferde kurun
 npm run install:all
 
 # Veya manuel olarak
@@ -71,7 +355,7 @@ cd server && npm install
 cd ../client && npm install
 ```
 
-### 3. Müzik İndirme Servisini Kurma (Opsiyonel)
+#### 3. İndirme Servisini Kurun (İsteğe Bağlı)
 
 Spotify ve YouTube'dan müzik indirmek için:
 
@@ -80,224 +364,47 @@ Spotify ve YouTube'dan müzik indirmek için:
 cd python-service
 pip install -r requirements.txt
 
-# Spotify API ayarları (opsiyonel ama önerilen)
+# Spotify API kimlik bilgilerini ayarlayın (isteğe bağlı ama önerilen)
 # https://developer.spotify.com/dashboard adresinden Client ID ve Secret alın
 
-# Windows:
+# Windows PowerShell:
 $env:SPOTIFY_CLIENT_ID="your_client_id"
 $env:SPOTIFY_CLIENT_SECRET="your_client_secret"
 
 # Linux/Mac:
-export SPOTIFY_CLIENT_ID="your_client_id"  
+export SPOTIFY_CLIENT_ID="your_client_id"
 export SPOTIFY_CLIENT_SECRET="your_client_secret"
 ```
 
-Detaylı kurulum için: [DOWNLOAD_SERVICE.md](DOWNLOAD_SERVICE.md)
+#### 4. Uygulamayı Başlatın
 
-### 4. Uygulamayı Başlatın
-
-#### Development Mode (Geliştirme)
+##### Geliştirme Modu
 ```bash
-# Sadece web uygulaması
+# Tüm servisleri başlatın (3 terminal gerekir)
+
+# Terminal 1: Node.js arka yüz
+cd server
 npm run dev
 
-# Müzik indirme servisi ile birlikte (3 terminal)
-# Terminal 1: Node.js server
-npm run dev
-
-# Terminal 2: Python download service
+# Terminal 2: Python indirme servisi
 cd python-service
 python main.py
 
-# Terminal 3: React client  
+# Terminal 3: React ön yüz
 cd client
 npm start
 ```
 
-#### Production Mode (Üretim)
+##### Üretim Modu
 ```bash
-# Build
+# Uygulamayı derleyin
 npm run build
 
-# Start
+# Üretim modunda başlatın
 npm start
 ```
 
-### 5. Uygulamayı Açın
+#### 5. Uygulamaya Erişin
 - Ana uygulama: `http://localhost:3000`
-- İndirme servisi API: `http://localhost:8000` (opsiyonel)
+- İndirme servisi API: `http://localhost:8000` (isteğe bağlı)
 - Node.js API: `http://localhost:3001/api`
-
-## 📁 Proje Yapısı
-
-```
-erotify/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── context/        # React context (state management)
-│   │   ├── services/       # API services
-│   │   ├── types/          # TypeScript type definitions
-│   │   └── ...
-│   └── package.json
-├── server/                 # Node.js backend
-│   ├── src/
-│   │   ├── routes/         # Express routes
-│   │   ├── utils/          # Utility functions
-│   │   ├── types/          # TypeScript type definitions
-│   │   └── index.ts        # Main server file
-│   └── package.json
-├── python-service/         # Download service (Python + FastAPI)
-│   ├── main.py            # FastAPI download service
-│   └── requirements.txt   # Python dependencies
-├── uploads/                # Uploaded music files
-├── data/                   # JSON data files
-│   ├── songs.json          # Song metadata
-│   └── playlists.json      # Playlist data
-├── DOWNLOAD_SERVICE.md     # Download service documentation
-└── package.json           # Root package.json
-```
-
-## 🎯 Kullanım
-
-### Müzik Yükleme
-1. Sol menüden "Dosya Yükle" sekmesine tıklayın
-2. Dosyaları sürükleyip bırakın veya "Gözat" butonuna tıklayın
-3. Desteklenen formatlar: MP3, WAV, OGG, FLAC, M4A, AAC
-4. Dosyalar otomatik olarak işlenir ve kütüphaneye eklenir
-
-### Müzik İndirme (Yeni!)
-1. Sol menüden "Müzik İndir" sekmesine tıklayın
-2. **URL'den İndirme**: Spotify veya YouTube URL'si yapıştırın
-3. **Arama ile İndirme**: Şarkı adı yazarak arama yapın  
-4. İndirme durumunu gerçek zamanlı takip edin
-5. İndirilen şarkılar otomatik olarak kütüphaneye eklenir
-
-**Desteklenen Linkler:**
-- Spotify şarkıları: `https://open.spotify.com/track/...`
-- Spotify albümleri: `https://open.spotify.com/album/...`
-- Spotify playlistleri: `https://open.spotify.com/playlist/...`
-- YouTube videoları: `https://youtube.com/watch?v=...`
-
-### Müzik Dinleme
-1. "Müzik Kütüphanem" sekmesinde şarkılarınızı görün
-2. Bir şarkıya tıklayarak çalmaya başlayın
-3. Alt kısımdaki player ile kontrolü sağlayın
-4. Shuffle, repeat modlarını kullanabilirsiniz
-
-### Playlist Oluşturma
-1. "Playlistler" sekmesine gidin
-2. "Yeni Playlist" butonuna tıklayın
-3. Playlist'e şarkı eklemek için şarkının yanındaki "..." menüsünü kullanın
-
-## 🌐 Digital Ocean Deployment
-
-### Droplet Oluşturma
-1. Digital Ocean'da yeni bir droplet oluşturun (Ubuntu 22.04 önerili)
-2. En az 1GB RAM, 25GB disk alanı seçin
-3. SSH key'inizi ekleyin
-
-### Sunucuya Kurulum
-```bash
-# Sunucuya bağlanın
-ssh root@your-droplet-ip
-
-# Node.js kurun
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# PM2 kurun (process manager)
-sudo npm install -g pm2
-
-# Projeyi klonlayın
-git clone https://github.com/yourusername/erotify.git
-cd erotify
-
-# Bağımlılıkları kurun
-npm run install:all
-
-# Build edin
-npm run build
-
-# PM2 ile başlatın
-pm2 start server/dist/index.js --name "erotify"
-pm2 startup
-pm2 save
-```
-
-### Nginx Kurulumu (Opsiyonel)
-```bash
-# Nginx kurun
-sudo apt install nginx
-
-# Nginx konfigürasyonu
-sudo nano /etc/nginx/sites-available/erotify
-
-# İçerik:
-server {
-    listen 80;
-    server_name your-domain.com;
-    
-    location / {
-        proxy_pass http://localhost:3001;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-
-# Aktifleştir
-sudo ln -s /etc/nginx/sites-available/erotify /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
-```
-
-## 🔧 Konfigürasyon
-
-### Environment Variables
-Server tarafında `.env` dosyası oluşturabilirsiniz:
-
-```env
-PORT=3001
-NODE_ENV=production
-MAX_FILE_SIZE=52428800  # 50MB
-UPLOAD_DIR=./uploads
-DATA_DIR=./data
-```
-
-### Dosya Boyutu Limiti
-`server/src/routes/music.ts` dosyasında `limits.fileSize` değerini değiştirebilirsiniz.
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repo'yu fork edin
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`)
-4. Branch'inizi push edin (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
-
-## 📝 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
-
-## 🐛 Sorun Bildirimi
-
-Bir hata bulursanız veya özellik isteğiniz varsa, GitHub Issues kullanın.
-
-## 📞 Destek
-
-- GitHub Issues: [Issues](https://github.com/yourusername/erotify/issues)
-- Documentation: [Wiki](https://github.com/yourusername/erotify/wiki)
-
-## 🙏 Teşekkürler
-
-Bu proje açık kaynak topluluk katkıları ile geliştirilmiştir. Katkıda bulunan herkese teşekkürler!
-
----
-
-**Erotify ile müzik dinlemenin keyfini çıkarın! 🎵**
